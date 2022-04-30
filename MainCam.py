@@ -5,7 +5,7 @@ import ChangeClothes as cc
 import random
 
 def virtual():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     images = cc.loadImages()
     thres = [130, 40, 75, 130]
     size = 180
