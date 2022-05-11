@@ -5,14 +5,14 @@ import ChangeClothes as cc
 import random
 
 def virtual():
-    cap = cv2.VideoCapture(0, cv2.CAP_V4L)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     images = cc.loadImages()
     thres = [130, 40, 75, 130]
     size = 180
     curClothId = 1
     th = thres[0]
     while True:
-        (ret, cam) = cap.read()
+        ret, cam = cap.read()
         cam = cv2.flip(cam, 1, 0)
         t_shirt = images[curClothId]
         resized = imutils.resize(cam, width=800)
@@ -34,13 +34,14 @@ def virtual():
             size = 100
 
         t_shirt = imutils.resize(t_shirt, width=size)
+
         f_height = cam.shape[0]
         f_width = cam.shape[1]
         t_height = t_shirt.shape[0]
         t_width = t_shirt.shape[1]
         height = int(f_height / 2 - t_height / 2)
         width = int(f_width / 2 - t_width / 2)
-        np.row_stack, np.column_stack, np.channels = t_shirt.shape
+        rows, cols, channels = t_shirt.shape
         t_shirt_gray = cv2.cvtColor(t_shirt, cv2.COLOR_BGR2GRAY)
         ret, mask = cv2.threshold(t_shirt_gray, th, 255, cv2.THRESH_BINARY_INV)
         mask_inv = cv2.bitwise_not(mask)
@@ -82,4 +83,5 @@ def virtual():
         if key == 27:
             break
     return
+
 virtual()
